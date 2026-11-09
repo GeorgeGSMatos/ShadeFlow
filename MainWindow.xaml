@@ -1,0 +1,221 @@
+<Window x:Class="ShadeFlow.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:motion="clr-namespace:ShadeFlow.Services" xmlns:ui="clr-namespace:ShadeFlow.Services" xmlns:inputs="clr-namespace:ShadeFlow.Controls" motion:UiMotion.Scope="True"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        Title="ShadeFlow" Style="{StaticResource {x:Type Window}}" Icon="Assets/ShadeFlow.ico" Width="1000" Height="560" MinWidth="760" MinHeight="560"
+        WindowStartupLocation="CenterScreen" StateChanged="WindowStateChanged" Closing="WindowClosing" Loaded="VisualLoaded">
+    <shell:WindowChrome.WindowChrome><shell:WindowChrome CaptionHeight="46" GlassFrameThickness="-1" ResizeBorderThickness="6" UseAeroCaptionButtons="True" /></shell:WindowChrome.WindowChrome>
+    <Grid>
+        <Grid.RowDefinitions><RowDefinition Height="46" /><RowDefinition Height="*" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
+        <Border BorderBrush="{DynamicResource ShadeBorderBrush}" BorderThickness="0,0,0,1">
+            <StackPanel Orientation="Horizontal" Margin="18,0,150,0" VerticalAlignment="Center">
+                <Image Source="Assets/ShadeFlow.ico" Width="22" Height="22" Margin="0,0,10,0" />
+                <TextBlock Text="ShadeFlow" FontWeight="SemiBold" VerticalAlignment="Center" />
+            </StackPanel>
+        </Border>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="184" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+            <Border Background="{DynamicResource ShadeNavigationBrush}" BorderBrush="{DynamicResource ShadeBorderBrush}" BorderThickness="0,0,1,0">
+                <DockPanel Margin="10,14,10,16" KeyboardNavigation.TabNavigation="Continue">
+                    <Button DockPanel.Dock="Bottom" Style="{StaticResource NavigationHelpButton}" Click="HelpClick" ToolTip="Ajuda da tela atual" AutomationProperties.Name="Ajuda">
+                        <StackPanel Orientation="Horizontal"><TextBlock Style="{StaticResource FluentIcon}" Text="{x:Static ui:AppIcons.Help}" Margin="0,0,12,0" /><TextBlock Text="Ajuda" VerticalAlignment="Center" /></StackPanel>
+                    </Button>
+                    <StackPanel>
+                        <RadioButton x:Name="DisplaysNavigation" Tag="Displays" GroupName="Navigation" Style="{StaticResource NavigationItem}" Checked="NavigationChanged" AutomationProperties.Name="Monitores">
+                            <StackPanel Orientation="Horizontal"><TextBlock Style="{StaticResource FluentIcon}" Text="{x:Static ui:AppIcons.Display}" Margin="0,0,12,0" /><TextBlock Text="Monitores" /></StackPanel>
+                        </RadioButton>
+                        <RadioButton x:Name="AutomationNavigation" Tag="Automation" GroupName="Navigation" Style="{StaticResource NavigationItem}" Checked="NavigationChanged" AutomationProperties.Name="Automação">
+                            <StackPanel Orientation="Horizontal"><TextBlock Style="{StaticResource FluentIcon}" Text="&#xE823;" Margin="0,0,12,0" /><TextBlock Text="Automação" /></StackPanel>
+                        </RadioButton>
+                        <RadioButton x:Name="PresetsNavigation" Tag="Presets" GroupName="Navigation" Style="{StaticResource NavigationItem}" Checked="NavigationChanged" AutomationProperties.Name="Presets">
+                            <StackPanel Orientation="Horizontal"><TextBlock Style="{StaticResource FluentIcon}" Text="&#xE734;" Margin="0,0,12,0" /><TextBlock Text="Presets" /></StackPanel>
+                        </RadioButton>
+                        <RadioButton Tag="Preferences" GroupName="Navigation" Style="{StaticResource NavigationItem}" Checked="NavigationChanged" AutomationProperties.Name="Configurações">
+                            <StackPanel Orientation="Horizontal"><TextBlock Style="{StaticResource FluentIcon}" Text="{x:Static ui:AppIcons.Settings}" Margin="0,0,12,0" /><TextBlock Text="Configurações" /></StackPanel>
+                        </RadioButton>
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+            <Grid Grid.Column="1" Margin="28,24,24,16">
+                <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="*" /></Grid.RowDefinitions>
+                <TextBlock x:Name="SafeModeBanner" Text="SAFE MODE · Automação e gravação de configuração desativadas nesta execução." Visibility="Collapsed" TextWrapping="Wrap" FontWeight="SemiBold" Foreground="{DynamicResource ShadeWarningBrush}" Margin="0,0,0,16" />
+                <ScrollViewer x:Name="PageScroller" Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="0,0,8,4">
+                    <Grid x:Name="PageContent">
+                        <StackPanel x:Name="DisplaysPage">
+                            <Grid Margin="0,0,0,22"><Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+                                <StackPanel><TextBlock Text="Monitores" Style="{StaticResource PageTitle}" /><TextBlock Text="O brilho ideal para cada tela." Style="{StaticResource MutedText}" Margin="0,5,0,0" /></StackPanel>
+                                <Button Grid.Column="1" Content="Restaurar 100%" Style="{StaticResource PrimaryButton}" Click="RestoreAllClick" VerticalAlignment="Center" Margin="12,0,0,0" ToolTip="{Binding Text, ElementName=RestoreHint}" />
+                            </Grid>
+                            <ItemsControl x:Name="DisplayList" IsEnabled="False">
+                                <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemContainerStyle><Style TargetType="ContentPresenter"><Setter Property="Width" Value="{Binding DisplayCardWidth, RelativeSource={RelativeSource AncestorType=Window}}" /></Style></ItemsControl.ItemContainerStyle>
+                                <ItemsControl.ItemTemplate><DataTemplate>
+                                    <Border Style="{StaticResource Card}" Margin="0,0,12,12">
+                                        <StackPanel>
+                                            <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+                                                <TextBlock Text="{x:Static ui:AppIcons.Display}" Style="{StaticResource FluentIcon}" FontSize="{DynamicResource IconLargeSize}" Margin="0,0,12,0" />
+                                                <StackPanel Grid.Column="1" ToolTip="{Binding Description}"><TextBlock Text="{Binding DisplayName}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" /><TextBlock Text="{Binding ResolutionDescription}" Style="{StaticResource MutedText}" FontSize="{DynamicResource FontCaption}" Margin="0,4,0,0" /></StackPanel>
+                                                <TextBlock Grid.Column="2" Text="{Binding Brightness, StringFormat={}{0:0}%}" FontSize="21" FontWeight="SemiBold" Margin="10,0,0,0" />
+                                            </Grid>
+                                            <TextBlock Text="Brilho" Style="{StaticResource MutedText}" Margin="0,20,0,0" />
+                                            <Slider Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" Value="{Binding Brightness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutomationProperties.Name="{Binding DisplayName, StringFormat=Brilho de {0}}" />
+                                            <Expander Header="Nome e detalhes" FontSize="{DynamicResource FontCaption}" Margin="0,10,0,0">
+                                                <StackPanel Margin="0,10,0,0"><TextBlock Text="{Binding OriginalFriendlyName}" Style="{StaticResource MutedText}" /><TextBlock Text="{Binding Description}" Style="{StaticResource MutedText}" Margin="0,4,0,8" />
+                                                    <TextBox Text="{Binding Alias, Mode=TwoWay, UpdateSourceTrigger=Explicit}" MaxLength="80" LostKeyboardFocus="AliasLostKeyboardFocus" KeyDown="AliasKeyDown" AutomationProperties.Name="Nome personalizado do display" ToolTip="Nome personalizado. Deixe vazio para usar o nome do Windows." />
+                                                </StackPanel>
+                                            </Expander>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate></ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <Border Style="{StaticResource Card}" Margin="0,2,12,0">
+                                <StackPanel>
+                                    <Grid><Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+                                        <StackPanel><TextBlock Text="Automação diária" FontWeight="SemiBold" /><TextBlock Text="{Binding Text, ElementName=AutomationState}" Foreground="{Binding Foreground, ElementName=AutomationState}" Margin="0,5,0,0" /></StackPanel>
+                                        <Button Grid.Column="1" Content="{x:Static ui:AppIcons.Clock}" Click="ManageAutomationClick" Style="{StaticResource IconButton}" ToolTip="Gerenciar automação" AutomationProperties.Name="Gerenciar automação" />
+                                    </Grid>
+                                    <TextBlock Text="{Binding Text, ElementName=ScheduleStatus}" Style="{StaticResource MutedText}" Margin="0,9,0,0" />
+                                    <Canvas x:Name="ScheduleTimeline" Height="54" Margin="20,10,20,0" SizeChanged="TimelineSizeChanged" ClipToBounds="False" IsHitTestVisible="False" />
+                                    <Button Content="Retomar automação agora" HorizontalAlignment="Left" Margin="0,8,0,0" Click="ResumeAutomationClick" IsEnabled="{Binding IsEnabled, ElementName=ResumeButton}" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel x:Name="AutomationPage" Visibility="Collapsed">
+                            <TextBlock Text="Automação" Style="{StaticResource PageTitle}" /><TextBlock Text="Seu brilho acompanha o ritmo do dia." Style="{StaticResource MutedText}" Margin="0,5,0,22" />
+                            <Border Style="{StaticResource Card}" Margin="0,0,0,16">
+                                <StackPanel>
+                                    <DockPanel><CheckBox x:Name="AutomationToggle" DockPanel.Dock="Right" Content="Ativada" Style="{StaticResource ToggleSwitch}" Checked="AutomationToggleChanged" Unchecked="AutomationToggleChanged" AutomationProperties.Name="Ativar automação diária" /><TextBlock Text="Automação diária" Style="{StaticResource SectionTitle}" /></DockPanel>
+                                    <Grid Margin="0,12,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition /></Grid.ColumnDefinitions><TextBlock x:Name="AutomationIcon" Text="{x:Static ui:AppIcons.Info}" Style="{StaticResource FluentIcon}" Margin="0,0,8,0" /><TextBlock x:Name="AutomationState" Grid.Column="1" motion:UiMotion.TextFeedback="True" Text="Automação desativada" TextWrapping="Wrap" VerticalAlignment="Center" /></Grid>
+                                    <TextBlock x:Name="ScheduleStatus" motion:UiMotion.TextFeedback="True" Style="{StaticResource MutedText}" Margin="0,5,0,14" />
+                                    <Button x:Name="ResumeButton" Content="Retomar automação agora" IsEnabled="False" HorizontalAlignment="Left" Click="ResumeAutomationClick" />
+                                </StackPanel>
+                            </Border>
+                            <DockPanel Margin="0,8,0,12"><Button DockPanel.Dock="Right" Click="AddScheduleClick" Style="{StaticResource PrimaryButton}" ><StackPanel Orientation="Horizontal"><TextBlock Text="{x:Static ui:AppIcons.Add}" Style="{StaticResource FluentIcon}" Margin="0,0,8,0" /><TextBlock Text="Adicionar horário" VerticalAlignment="Center" /></StackPanel></Button><TextBlock Text="Programação diária" Style="{StaticResource SectionTitle}" VerticalAlignment="Center" /></DockPanel>
+                            <Border Style="{StaticResource Card}" Padding="14">
+                                <StackPanel>
+                                    <TextBlock Text="Nenhum horário configurado. Adicione o primeiro horário acima." Margin="4">
+                                        <TextBlock.Style><Style TargetType="TextBlock" BasedOn="{StaticResource MutedText}"><Setter Property="Visibility" Value="Collapsed" /><Style.Triggers><DataTrigger Binding="{Binding Items.Count, ElementName=ScheduleList}" Value="0"><Setter Property="Visibility" Value="Visible" /></DataTrigger></Style.Triggers></Style></TextBlock.Style>
+                                    </TextBlock>
+                                    <ItemsControl x:Name="ScheduleList"><ItemsControl.ItemTemplate><DataTemplate>
+                                        <Border BorderBrush="{DynamicResource ShadeBorderBrush}" BorderThickness="0,0,0,1" Padding="4,9">
+                                            <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="90" /><ColumnDefinition /><ColumnDefinition Width="Auto" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding TimeText}" FontSize="{DynamicResource FontSubheading}" FontWeight="SemiBold" VerticalAlignment="Center" />
+                                                <TextBlock Grid.Column="1" Text="{Binding Brightness, StringFormat={}{0}% de brilho}" VerticalAlignment="Center" />
+                                                <Button Grid.Column="2" Content="{x:Static ui:AppIcons.Edit}" Style="{StaticResource IconButton}" Click="EditScheduleClick" Margin="8,0" ToolTip="Editar horário" AutomationProperties.Name="{Binding TimeText, StringFormat=Editar horário {0}}" />
+                                                <Button Grid.Column="3" Content="{x:Static ui:AppIcons.Trash}" Click="DeleteScheduleClick" Style="{StaticResource DangerIconButton}" ToolTip="Excluir horário" AutomationProperties.Name="{Binding TimeText, StringFormat=Excluir horário {0}}" />
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate></ItemsControl.ItemTemplate></ItemsControl>
+                                </StackPanel>
+                            </Border>
+                            <TextBlock Text="A programação se repete todos os dias. Ajustes manuais duram até o próximo horário." Style="{StaticResource MutedText}" Margin="0,14,0,0" />
+                        </StackPanel>
+                        <StackPanel x:Name="PresetsPage" Visibility="Collapsed">
+                            <TextBlock Text="Presets" Style="{StaticResource PageTitle}" />
+                            <TextBlock Text="Seu brilho, a um clique. Escolha um ícone para cada momento." Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,5,0,18" />
+                            <Button Style="{StaticResource PrimaryButton}" HorizontalAlignment="Left" Click="AddPresetClick" Margin="0,0,0,16" ><StackPanel Orientation="Horizontal"><TextBlock Text="{x:Static ui:AppIcons.Add}" Style="{StaticResource FluentIcon}" Margin="0,0,8,0" /><TextBlock Text="Salvar configuração atual" VerticalAlignment="Center" /></StackPanel></Button>
+                            <TextBlock Text="Nenhum preset salvo. Ajuste os monitores e salve sua primeira combinação.">
+                                <TextBlock.Style><Style TargetType="TextBlock" BasedOn="{StaticResource MutedText}"><Setter Property="Visibility" Value="Collapsed" /><Style.Triggers><DataTrigger Binding="{Binding Items.Count, ElementName=PresetList}" Value="0"><Setter Property="Visibility" Value="Visible" /></DataTrigger></Style.Triggers></Style></TextBlock.Style>
+                            </TextBlock>
+                            <ItemsControl x:Name="PresetList"><ItemsControl.ItemTemplate><DataTemplate>
+                                <Border Style="{StaticResource Card}" Margin="0,0,0,12"><StackPanel>
+                                    <DockPanel>
+                                        <Button DockPanel.Dock="Right" Content="Aplicar" Style="{StaticResource PrimaryButton}" Click="ApplyPresetClick" />
+                                        <TextBlock Text="{Binding Glyph}" Style="{StaticResource FluentIcon}" FontSize="24" Margin="0,0,14,0" />
+                                        <TextBlock Text="{Binding Name}" FontSize="{DynamicResource FontSubheading}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+                                    </DockPanel>
+                                    <TextBlock Text="{Binding Description}" Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,10,0,12" />
+                                    <WrapPanel>
+                                        <Button Content="{x:Static ui:AppIcons.Edit}" Style="{StaticResource IconButton}" Click="EditPresetClick" Margin="0,0,8,6" ToolTip="Editar nome, ícone e brilho" AutomationProperties.Name="{Binding Name, StringFormat=Editar preset {0}}" />
+                                        <Button Content="Atualizar com brilho atual" Click="UpdatePresetClick" Margin="0,0,8,6" ToolTip="Atualiza somente os monitores conectados e preserva os demais" />
+                                        <Button Content="{x:Static ui:AppIcons.Trash}" Click="DeletePresetClick" Style="{StaticResource DangerIconButton}" ToolTip="Excluir preset" AutomationProperties.Name="{Binding Name, StringFormat=Excluir preset {0}}" Margin="0,0,0,6" />
+                                    </WrapPanel>
+                                </StackPanel></Border>
+                            </DataTemplate></ItemsControl.ItemTemplate></ItemsControl>
+                            <TextBlock Text="Presets usam os valores individuais salvos, mesmo com Vincular monitores ligado. Ao mover um slider, o vínculo volta a valer. O preset ativo não é restaurado ao reiniciar o aplicativo." Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,12,0,0" />
+                        </StackPanel>
+                        <StackPanel x:Name="PreferencesPage" Visibility="Collapsed">
+                            <TextBlock Text="Configurações" Style="{StaticResource PageTitle}" /><TextBlock Text="Ajustes simples para o seu dia a dia." Style="{StaticResource MutedText}" Margin="0,5,0,22" />
+                            <TextBlock Text="Geral" Style="{StaticResource SectionTitle}" Margin="0,0,0,12" />
+<Border Style="{StaticResource SettingsCard}"><StackPanel><Grid Style="{StaticResource SettingsRow}"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+    <TextBlock Text="{x:Static ui:AppIcons.Power}" Style="{StaticResource SettingsIcon}" />
+    <StackPanel Grid.Column="1" VerticalAlignment="Center"><TextBlock Text="Iniciar com o Windows" TextWrapping="Wrap" FontWeight="SemiBold" /><TextBlock Text="Iniciar discretamente na bandeja." Style="{StaticResource SettingsDescription}" /></StackPanel>
+    <CheckBox x:Name="StartupToggle" Grid.Column="2" Style="{StaticResource ToggleSwitch}" Checked="StartupToggleChanged" Unchecked="StartupToggleChanged" AutomationProperties.Name="Iniciar ShadeFlow com Windows" Margin="16,0,0,0" VerticalAlignment="Center" /></Grid></StackPanel></Border><TextBlock x:Name="StartupStatus" Style="{StaticResource MutedText}" Margin="0,0,0,12" />
+                            <TextBlock Text="Brilho e transição" Style="{StaticResource SectionTitle}" Margin="0,0,0,12" />
+<Border Style="{StaticResource SettingsCard}"><StackPanel><Grid Style="{StaticResource SettingsRow}"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+    <TextBlock Text="{x:Static ui:AppIcons.Link}" Style="{StaticResource SettingsIcon}" />
+    <StackPanel Grid.Column="1" VerticalAlignment="Center"><TextBlock Text="Vincular monitores" TextWrapping="Wrap" FontWeight="SemiBold" /><TextBlock Text="Ao ajustar uma tela, aplicar o mesmo brilho às demais." Style="{StaticResource SettingsDescription}" /></StackPanel>
+    <CheckBox x:Name="LinkToggle" Grid.Column="2" Style="{StaticResource ToggleSwitch}" Checked="QuickPreferenceChanged" Unchecked="QuickPreferenceChanged" AutomationProperties.Name="Vincular brilho dos monitores" Margin="16,0,0,0" VerticalAlignment="Center" /></Grid><Border Style="{StaticResource Divider}" /><Grid Style="{StaticResource SettingsRow}"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+    <TextBlock Text="{x:Static ui:AppIcons.Clock}" Style="{StaticResource SettingsIcon}" />
+    <StackPanel Grid.Column="1" VerticalAlignment="Center"><TextBlock Text="Transição da automação" TextWrapping="Wrap" FontWeight="SemiBold" /><TextBlock Text="Duração da mudança entre níveis de brilho." Style="{StaticResource SettingsDescription}" /></StackPanel>
+    <ComboBox x:Name="TransitionChoice" Grid.Column="2" Style="{StaticResource SettingsChoice}" DisplayMemberPath="Label" SelectedValuePath="Value" SelectionChanged="QuickPreferenceChanged" AutomationProperties.Name="Duração da transição" /></Grid><Border Style="{StaticResource Divider}" /><Grid Style="{StaticResource SettingsRow}"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+    <TextBlock Text="{x:Static ui:AppIcons.Keyboard}" Style="{StaticResource SettingsIcon}" />
+    <StackPanel Grid.Column="1" VerticalAlignment="Center"><TextBlock Text="Passo dos atalhos" TextWrapping="Wrap" FontWeight="SemiBold" /><TextBlock Text="Variação percentual de cada ajuste de brilho." Style="{StaticResource SettingsDescription}" /></StackPanel>
+    <ComboBox x:Name="StepChoice" Grid.Column="2" Style="{StaticResource SettingsChoice}" SelectionChanged="QuickPreferenceChanged" AutomationProperties.Name="Passo dos atalhos de brilho" /></Grid></StackPanel></Border>                            <Border Style="{StaticResource Card}" Margin="0,0,0,12"><StackPanel>
+                                <TextBlock Text="Atalhos globais" Style="{StaticResource SectionTitle}" />
+                                <TextBlock Text="Clique no atalho e pressione a combinação desejada. Esc cancela; o botão ao lado remove. Prefira combinações com Ctrl, Alt ou Shift." Style="{StaticResource MutedText}" Margin="0,6,0,16" />
+                                <Grid><Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition Width="{DynamicResource HotkeyColumnWidth}" /></Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /></Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="Aumentar brilho" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,12,8" />
+                                    <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,0,0,8">
+                                        <Grid><Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+                                            <inputs:HotkeyCaptureButton x:Name="IncreaseHotkey" Style="{StaticResource HotkeyCapture}" AutomationProperties.Name="Atalho: Aumentar brilho" />
+                                            <Button Grid.Column="1" Content="{x:Static ui:AppIcons.Clear}" Style="{StaticResource IconButton}" Tag="IncreaseHotkey" Click="ClearHotkeyClick" Margin="8,0,0,0" ToolTip="Remover atalho: Aumentar brilho" AutomationProperties.Name="Remover atalho: Aumentar brilho" />
+                                        </Grid>
+                                        <TextBlock Text="{Binding ValidationMessage, ElementName=IncreaseHotkey}" Style="{StaticResource HotkeyValidation}" AutomationProperties.LiveSetting="Polite" />
+                                    </StackPanel>
+                                    <TextBlock Grid.Row="1" Text="Diminuir brilho" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,12,8" />
+                                    <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,8">
+                                        <Grid><Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+                                            <inputs:HotkeyCaptureButton x:Name="DecreaseHotkey" Style="{StaticResource HotkeyCapture}" AutomationProperties.Name="Atalho: Diminuir brilho" />
+                                            <Button Grid.Column="1" Content="{x:Static ui:AppIcons.Clear}" Style="{StaticResource IconButton}" Tag="DecreaseHotkey" Click="ClearHotkeyClick" Margin="8,0,0,0" ToolTip="Remover atalho: Diminuir brilho" AutomationProperties.Name="Remover atalho: Diminuir brilho" />
+                                        </Grid>
+                                        <TextBlock Text="{Binding ValidationMessage, ElementName=DecreaseHotkey}" Style="{StaticResource HotkeyValidation}" AutomationProperties.LiveSetting="Polite" />
+                                    </StackPanel>
+                                    <TextBlock Grid.Row="2" Text="Restaurar 100% imediatamente" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,12,8" />
+                                    <StackPanel Grid.Row="2" Grid.Column="1" Margin="0,0,0,8">
+                                        <Grid><Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+                                            <inputs:HotkeyCaptureButton x:Name="RestoreHotkey" Style="{StaticResource HotkeyCapture}" AutomationProperties.Name="Atalho: Restaurar 100% imediatamente" />
+                                            <Button Grid.Column="1" Content="{x:Static ui:AppIcons.Clear}" Style="{StaticResource IconButton}" Tag="RestoreHotkey" Click="ClearHotkeyClick" Margin="8,0,0,0" ToolTip="Remover atalho: Restaurar 100% imediatamente" AutomationProperties.Name="Remover atalho: Restaurar 100% imediatamente" />
+                                        </Grid>
+                                        <TextBlock Text="{Binding ValidationMessage, ElementName=RestoreHotkey}" Style="{StaticResource HotkeyValidation}" AutomationProperties.LiveSetting="Polite" />
+                                    </StackPanel>
+                                    <TextBlock Grid.Row="3" Text="Retomar automação" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,12,8" />
+                                    <StackPanel Grid.Row="3" Grid.Column="1" Margin="0,0,0,8">
+                                        <Grid><Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+                                            <inputs:HotkeyCaptureButton x:Name="ResumeHotkey" Style="{StaticResource HotkeyCapture}" AutomationProperties.Name="Atalho: Retomar automação" />
+                                            <Button Grid.Column="1" Content="{x:Static ui:AppIcons.Clear}" Style="{StaticResource IconButton}" Tag="ResumeHotkey" Click="ClearHotkeyClick" Margin="8,0,0,0" ToolTip="Remover atalho: Retomar automação" AutomationProperties.Name="Remover atalho: Retomar automação" />
+                                        </Grid>
+                                        <TextBlock Text="{Binding ValidationMessage, ElementName=ResumeHotkey}" Style="{StaticResource HotkeyValidation}" AutomationProperties.LiveSetting="Polite" />
+                                    </StackPanel>
+                                </Grid>
+                                <Button Content="Aplicar atalhos" Style="{StaticResource PrimaryButton}" HorizontalAlignment="Right" Margin="0,14,0,0" Click="SaveHotkeysClick" />
+                                <TextBlock x:Name="RestoreHint" Text="Restaurar imediatamente: Ctrl+Alt+0" Style="{StaticResource MutedText}" Margin="0,12,0,0" />
+                                <TextBlock x:Name="HotkeyStatus" Style="{StaticResource MutedText}" Margin="0,4,0,0" />
+                            </StackPanel></Border>
+                            <Border Style="{StaticResource Card}"><StackPanel>
+                                <TextBlock Text="Dados e configuração" Style="{StaticResource SectionTitle}" Margin="0,0,0,12" />
+                                <TextBlock Text="Transfira preferências, presets e horários entre instalações." Style="{StaticResource MutedText}" Margin="0,0,0,16" />
+                                <WrapPanel><Button Margin="0,0,8,8" Click="ExportConfigurationClick" ><StackPanel Orientation="Horizontal"><TextBlock Text="{x:Static ui:AppIcons.Export}" Style="{StaticResource FluentIcon}" Margin="0,0,8,0" /><TextBlock Text="Exportar" VerticalAlignment="Center" /></StackPanel></Button><Button Margin="0,0,8,8" Click="ImportConfigurationClick" ><StackPanel Orientation="Horizontal"><TextBlock Text="{x:Static ui:AppIcons.Import}" Style="{StaticResource FluentIcon}" Margin="0,0,8,0" /><TextBlock Text="Importar" VerticalAlignment="Center" /></StackPanel></Button><Button Margin="0,0,0,8" Click="ResetConfigurationClick" Style="{StaticResource DangerButton}" ><StackPanel Orientation="Horizontal"><TextBlock Text="{x:Static ui:AppIcons.Restore}" Style="{StaticResource FluentIcon}" Margin="0,0,8,0" /><TextBlock Text="Restaurar padrões" VerticalAlignment="Center" /></StackPanel></Button></WrapPanel>
+                            </StackPanel></Border>
+                            <TextBlock Text="Sobre" Style="{StaticResource SectionTitle}" Margin="0,8,0,12" />
+                            <Border Style="{StaticResource Card}">
+                                <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+                                    <Image Source="Assets/ShadeFlow.ico" Width="36" Height="36" Margin="0,0,18,0" VerticalAlignment="Top" />
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="ShadeFlow" FontWeight="SemiBold" /><TextBlock x:Name="AboutVersion" Style="{StaticResource MutedText}" Margin="0,4,0,0" />
+                                        <TextBlock Text="© 2026 George GS Matos. Todos os direitos reservados." Style="{StaticResource MutedText}" Margin="0,4,0,0" />
+                                        <TextBlock Text="Licença proprietária" Style="{StaticResource MutedText}" Margin="0,4,0,12" />
+
+                                    </StackPanel>
+                                    <Button Grid.Column="2" Content="Informações e diagnóstico" Style="{StaticResource LinkButton}" Margin="20,0,0,0" VerticalAlignment="Center" Click="AboutClick" />
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+        <Border Grid.Row="2" BorderBrush="{DynamicResource ShadeBorderBrush}" BorderThickness="0,1,0,0" Padding="18,9">
+            <TextBlock x:Name="Status" motion:UiMotion.TextFeedback="True" Text="Inicializando…" Style="{StaticResource MutedText}" FontSize="{DynamicResource FontStatus}" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}" AutomationProperties.LiveSetting="Polite" />
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="ShadeFlow">
+  <circle cx="128" cy="128" r="104" fill="none" stroke="#F5F5F5" stroke-width="18"/>
+  <path d="M119 33A96 96 0 0 0 32 128a96 96 0 0 0 87 95c-28-24-43-57-43-95s15-71 43-95Z" fill="#111214"/>
+  <path d="M119 33c-28 24-43 57-43 95s15 71 43 95" fill="none" stroke="#F5F5F5" stroke-width="12" stroke-linecap="round"/>
+</svg>

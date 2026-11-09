@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Segurança e vulnerabilidades
+    url: https://github.com/GeorgeGSMatos/ShadeFlow/security/policy
+    about: Consulte o procedimento de relato privado antes de enviar detalhes.

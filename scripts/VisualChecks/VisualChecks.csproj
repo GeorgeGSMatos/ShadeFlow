@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <StartupObject>Program</StartupObject>
+    <NoWarn>$(NoWarn);WFAC010</NoWarn>
+    <EnableDefaultApplicationDefinition>false</EnableDefaultApplicationDefinition>
+  </PropertyGroup>
+  <!-- WPF requires subclasses of compiled XAML roots to live in the same assembly.
+       Compile the actual production views into this isolated verification executable. -->
+  <ItemGroup>
+    <ApplicationDefinition Include="../../App.xaml" Link="App.xaml" />
+    <Page Include="../../MainWindow.xaml" Link="MainWindow.xaml" />
+    <Page Include="../../Views/*.xaml" Link="Views/%(Filename)%(Extension)" />
+    <Page Include="../../Styles/*.xaml" Link="Styles/%(Filename)%(Extension)" />
+    <Compile Include="../../*.cs" Link="%(Filename)%(Extension)" />
+    <Compile Include="../../Development/*.cs" Link="Development/%(Filename)%(Extension)" />
+    <Compile Include="../../Controls/*.cs" Link="Controls/%(Filename)%(Extension)" />
+    <Compile Include="../../Models/*.cs" Link="Models/%(Filename)%(Extension)" />
+    <Compile Include="../../Services/*.cs" Link="Services/%(Filename)%(Extension)" />
+    <Compile Include="../../Views/*.cs" Link="Views/%(Filename)%(Extension)" />
+    <Resource Include="../../Assets/ShadeFlow.ico" Link="Assets/ShadeFlow.ico" />
+  </ItemGroup>
+</Project>

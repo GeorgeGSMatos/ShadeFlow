@@ -1,0 +1,35 @@
+# Tooling, local credentials and profiles
+.git/
+.aws/
+.codex/
+.agents/
+.dev/
+.env
+.env.*
+!.env.example
+*.pem
+*.pfx
+*.key
+.vs/
+.idea/
+*.user
+*.suo
+__pycache__/
+*.py[cod]
+# Generated files and private runtime data
+**/bin/
+**/obj/
+node_modules/
+release/
+artifacts/
+outputs/
+test-results/
+playwright-report/
+*.log
+Logs/
+settings.json
+settings.backup.json
+config.json
+history.jsonl
+# Downloaded runtime is packaged, not committed
+desktop/runtime/node.exe

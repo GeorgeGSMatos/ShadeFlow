@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <DefaultItemExcludes>$(DefaultItemExcludes);.dev/**</DefaultItemExcludes>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PlatformTarget>x64</PlatformTarget>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <!-- WPF owns process DPI awareness through the validated PerMonitorV2 manifest.
+         WinForms is used only for NotifyIcon, so its forms-specific DPI analyzer is not applicable. -->
+    <NoWarn>$(NoWarn);WFAC010</NoWarn>
+    <ApplicationIcon>Assets/ShadeFlow.ico</ApplicationIcon>
+    <Version>1.2.1</Version>
+    <FileVersion>1.2.1.0</FileVersion>
+    <AssemblyVersion>1.2.1.0</AssemblyVersion>
+    <InformationalVersion>1.2.1</InformationalVersion>
+    <Authors>George GS Matos</Authors>
+    <Company>George GS Matos</Company>
+    <Product>ShadeFlow</Product>
+    <Description>Software display dimming for Windows.</Description>
+    <Copyright>Copyright © 2026 George GS Matos. All rights reserved.</Copyright>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Tests/**/*.cs" />
+    <Compile Remove="scripts/**/*.cs" />
+    <Compile Remove="artifacts/**/*.cs" />
+    <Compile Remove=".dev/**/*.cs" />
+    <Page Remove=".dev/**/*.xaml;artifacts/**/*.xaml" />
+    <Content Include="Assets/ShadeFlow.ico" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

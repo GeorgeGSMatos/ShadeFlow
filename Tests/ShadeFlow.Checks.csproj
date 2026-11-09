@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../Models/*.cs" Link="Models/%(Filename)%(Extension)" />
+    <Compile Include="../Services/ConfigurationService.cs" Link="ConfigurationService.cs" />
+    <Compile Include="../Services/ScheduleCalculator.cs" Link="ScheduleCalculator.cs" />
+    <Compile Include="../Services/BrightnessSchedulerService.cs" Link="BrightnessSchedulerService.cs" />
+    <Compile Include="../Services/Clock.cs" Link="Clock.cs" />
+    <Compile Include="../Services/LogService.cs" Link="LogService.cs" />
+    <Compile Include="../Services/LaunchOptions.cs" Link="LaunchOptions.cs" />
+    <Compile Include="../Services/SingleInstanceService.cs" Link="SingleInstanceService.cs" />
+    <Compile Include="../Services/NativeMethods.cs" Link="NativeMethods.cs" />
+    <Compile Include="../Services/QuickPanelPositioning.cs" Link="QuickPanelPositioning.cs" />
+    <Compile Include="../Services/BrightnessTransitionService.cs" Link="BrightnessTransitionService.cs" />
+    <Compile Include="../Services/BrightnessMath.cs" Link="BrightnessMath.cs" />
+    <Compile Include="../Services/HotkeyRegistrationSet.cs" Link="HotkeyRegistrationSet.cs" />
+    <Compile Include="../Services/OverlayManager.cs" Link="OverlayManager.cs" />
+    <Compile Include="../Services/OverlayRecoveryPolicy.cs" Link="OverlayRecoveryPolicy.cs" />
+  </ItemGroup>
+</Project>

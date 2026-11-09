@@ -1,0 +1,53 @@
+CONTRATO DE LICENÇA DE USUÁRIO FINAL — SHADEFLOW
+
+Copyright © 2026 George GS Matos. Todos os direitos reservados.
+
+Ao instalar, executar ou utilizar o ShadeFlow, você aceita estes termos.
+
+1. Licença de uso pessoal
+
+O titular concede ao usuário uma licença limitada, revogável, não exclusiva e
+intransferível para instalar e utilizar uma cópia oficial e não modificada do
+ShadeFlow para fins pessoais e não comerciais.
+
+2. Uso comercial
+
+Uso profissional, empresarial, institucional, comercial ou com finalidade de
+obtenção de receita exige autorização ou licença comercial separada e escrita
+de George GS Matos.
+
+3. Restrições
+
+Não é permitido redistribuir, vender, alugar, sublicenciar, modificar, publicar
+o código-fonte, criar derivados ou remover avisos de autoria. Engenharia reversa
+é vedada, exceto na medida em que a legislação aplicável expressamente a permita.
+
+4. Funcionamento e limitações
+
+O ShadeFlow realiza escurecimento visual por overlay preto. Ele não reduz o
+backlight físico e não controla DDC/CI, gamma ou a Luz Noturna do Windows. O
+usuário é responsável por testar a compatibilidade no próprio equipamento e por
+manter acesso aos mecanismos de recuperação documentados.
+
+5. Ausência de garantia
+
+O software é fornecido "no estado em que se encontra", sem garantia de operação
+ininterrupta, adequação a finalidade específica ou compatibilidade universal.
+
+6. Responsabilidade
+
+Na máxima extensão permitida pela legislação aplicável, o titular não responde
+por danos indiretos, incidentais, perda de dados, lucros cessantes ou interrupção
+de atividade relacionados ao uso do ShadeFlow.
+
+7. Encerramento
+
+O descumprimento destes termos encerra automaticamente esta licença. Nesse caso,
+o usuário deve interromper o uso e excluir as cópias sob seu controle.
+
+8. Direitos reservados
+
+Todo direito não concedido expressamente permanece reservado a George GS Matos.
+
+Este documento é uma base operacional e não substitui revisão jurídica
+profissional para comercialização em escala.

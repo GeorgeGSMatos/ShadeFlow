@@ -1,0 +1,19 @@
+ShadeFlow 1.1.1-diagnostic
+==========================
+
+Esta versão observa a ordem das janelas sem corrigir ou reposicionar o overlay.
+
+Como testar:
+
+1. Encerre qualquer outra versão do ShadeFlow pelo menu Sair.
+2. Execute ShadeFlow.exe desta pasta.
+3. Use normalmente e aplique o preset que costuma anteceder o problema.
+4. Quando apenas o wallpaper estiver escurecido, não reinicie o ShadeFlow.
+5. Anote aproximadamente o horário em que o problema apareceu.
+6. Copie o log do dia em:
+   %LOCALAPPDATA%\ShadeFlow\Logs\shadeflow-AAAA-MM-DD.log
+
+As linhas relevantes começam com OVERLAY-DIAG. Elas contêm nomes de processos e
+classes de janelas, mas não registram títulos, textos ou conteúdo das janelas.
+
+Esta build é temporária e deve ser substituída após o diagnóstico.

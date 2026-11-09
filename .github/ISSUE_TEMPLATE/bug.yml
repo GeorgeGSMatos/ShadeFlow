@@ -1,0 +1,38 @@
+name: Relatar um problema
+description: Informe um comportamento inesperado do ShadeFlow.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Não publique vulnerabilidades, credenciais, documentos ou caminhos pessoais. Veja SECURITY.md.
+  - type: input
+    id: version
+    attributes:
+      label: Versão do aplicativo
+      placeholder: Copie de Configurações → Sobre
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Versão do Windows
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Passos para reproduzir
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Resultado esperado e observado
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidências sem dados pessoais
+      description: Revise capturas e logs antes de anexar.

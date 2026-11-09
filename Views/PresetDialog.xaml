@@ -1,0 +1,32 @@
+<Window x:Class="ShadeFlow.Views.PresetDialog" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:motion="clr-namespace:ShadeFlow.Services" xmlns:ui="clr-namespace:ShadeFlow.Services" motion:UiMotion.Scope="True"
+        Icon="../Assets/ShadeFlow.ico" Title="Preset de brilho" Style="{StaticResource DialogWindow}" Width="460" SizeToContent="Height" MaxHeight="700" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+    <Grid><Grid.RowDefinitions><RowDefinition /><RowDefinition Height="Auto" /></Grid.RowDefinitions><ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto"><StackPanel Margin="{DynamicResource DialogPadding}">
+        <StackPanel Orientation="Horizontal"><TextBlock Text="{x:Static ui:AppIcons.Presets}" Style="{StaticResource FluentIcon}" Margin="0,0,12,0" /><TextBlock Text="Preset de brilho" Style="{StaticResource DialogHeading}" /></StackPanel>
+        <TextBlock Text="Salve uma combinação de brilho para seus monitores." Style="{StaticResource MutedText}" Margin="0,0,0,12" />
+        <Label Content="Nome" Foreground="{DynamicResource ShadeTextBrush}" Target="{Binding ElementName=NameInput}" />
+        <TextBox x:Name="NameInput" MaxLength="40" AutomationProperties.Name="Nome do preset" />
+        <Label Content="Ícone no painel rápido" Foreground="{DynamicResource ShadeTextBrush}" Target="{Binding ElementName=IconChoice}" Margin="0,12,0,0" />
+        <ComboBox x:Name="IconChoice" SelectedValuePath="Id" AutomationProperties.Name="Ícone do preset">
+            <ComboBox.ItemTemplate><DataTemplate><StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Glyph}" Style="{StaticResource FluentIcon}" Margin="0,0,12,0" />
+                <TextBlock Text="{Binding Name}" />
+            </StackPanel></DataTemplate></ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBlock Text="Brilho por monitor" FontWeight="SemiBold" Margin="0,20,0,8" />
+        <ItemsControl x:Name="MonitorValues"><ItemsControl.ItemTemplate><DataTemplate>
+            <Grid Margin="0,5"><Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition Width="75" /></Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" ToolTip="{Binding Name}" />
+                <TextBox Grid.Column="1" Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}" MaxLength="3" AutomationProperties.Name="{Binding Name, StringFormat=Brilho de {0}}" />
+            </Grid>
+        </DataTemplate></ItemsControl.ItemTemplate></ItemsControl>
+        <TextBlock Text="Valores de 0 a 100. Monitores desconectados já salvos são preservados." Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,8,0,16" />
+        <CheckBox x:Name="HoldToggle" Content="Manter até retomar automação" Foreground="{DynamicResource ShadeTextBrush}" />
+        <TextBlock Text="Desmarcado: o próximo horário assume o controle. Marcado: horários e retomada do PC não substituem o preset; use Retomar automação." TextWrapping="Wrap" Style="{StaticResource MutedText}" Margin="0,8,0,12" />
+        <TextBlock x:Name="ErrorText" Foreground="{DynamicResource ShadeErrorBrush}" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+
+    </StackPanel></ScrollViewer>
+    <Border Grid.Row="1" BorderBrush="{DynamicResource ShadeBorderBrush}" BorderThickness="0,1,0,0">        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="24,16,24,24">
+            <Button Content="Cancelar" IsCancel="True" Margin="0,0,8,0" />
+            <Button Content="Salvar" IsDefault="True" Style="{StaticResource PrimaryButton}" Click="SaveClick" />
+        </StackPanel></Border></Grid>
+</Window>

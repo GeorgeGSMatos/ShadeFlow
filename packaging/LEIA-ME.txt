@@ -1,0 +1,32 @@
+ShadeFlow 1.2.1 - Windows 10/11 x64
+
+Copyright © 2026 George GS Matos. Todos os direitos reservados.
+O uso deste software está sujeito ao EULA.txt incluído no pacote.
+
+PORTÁTIL
+Extraia TODO o ZIP para uma pasta permanente e execute ShadeFlow.exe.
+O .NET está incluído. Não mova somente o executável: mantenha todas as DLLs e Assets.
+Para iniciar com Windows, ative a opção nas Preferências após escolher a pasta definitiva.
+
+INSTALADOR
+Quando disponibilizado separadamente, execute ShadeFlow-1.2.1-win-x64-Setup.exe. Instala somente para seu usuário,
+em %LOCALAPPDATA%\Programs\ShadeFlow, sem exigir administrador.
+Encerre pelo tray antes de instalar, atualizar ou desinstalar.
+Se mudar da edição portátil para instalada, desligue Iniciar com Windows na antiga
+e ative novamente na instalada. O instalador não ativa startup automaticamente.
+Desinstale pelas Configurações do Windows. Configurações e logs são preservados.
+
+ATALHOS
+Ctrl+Alt+Up/Down: aumentar/diminuir. Ctrl+Alt+0: 100% imediatamente.
+Ctrl+Alt+A: retomar automação. Atalhos podem ser alterados nas Preferências.
+X e minimizar mantêm o aplicativo na bandeja. Sair restaura 100% e encerra.
+
+RECUPERAÇÃO
+ShadeFlow.exe --safe-mode abre em 100%, sem automação nem gravação de configurações.
+Settings: %LOCALAPPDATA%\ShadeFlow\settings.json (formato V3).
+Backup: settings.backup.json na mesma pasta. Logs: subpasta Logs.
+
+O pacote não possui assinatura digital do autor.
+O dimming é feito por overlay preto: não reduz o backlight físico.
+HDR, tela cheia exclusiva e área de trabalho segura podem ter limitações.
+A Luz Noturna do Windows é independente e não é controlada pelo ShadeFlow.

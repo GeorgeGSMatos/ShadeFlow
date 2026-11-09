@@ -1,0 +1,42 @@
+SHADEFLOW — LICENÇA PROPRIETÁRIA
+
+Copyright © 2026 George GS Matos. Todos os direitos reservados.
+
+1. Titularidade
+
+O ShadeFlow, incluindo seu código-fonte, identidade visual, documentação e
+demais materiais originais, pertence a George GS Matos. Nenhuma disposição
+desta licença transfere direitos de propriedade intelectual ao usuário.
+
+2. Ausência de licença sobre o código-fonte
+
+O acesso ao código-fonte, quando concedido, não autoriza copiar, modificar,
+publicar, redistribuir, sublicenciar, vender ou criar obras derivadas. Qualquer
+permissão dessa natureza exige autorização prévia e escrita do titular.
+
+3. Executáveis oficiais
+
+O uso de executáveis oficialmente distribuídos é regido pelo EULA.txt que
+acompanha o produto. O uso comercial ou empresarial exige licença separada e
+escrita do titular.
+
+4. Restrições
+
+Salvo quando a legislação aplicável expressamente não permitir a restrição, é
+proibido remover avisos de autoria, contornar medidas de proteção, realizar
+engenharia reversa, redistribuir, alugar, sublicenciar, revender ou incorporar o
+ShadeFlow em outro produto sem autorização escrita.
+
+5. Garantias e responsabilidade
+
+O software é fornecido "no estado em que se encontra", sem garantias expressas
+ou implícitas. Na máxima extensão permitida pela lei, o titular não será
+responsável por danos indiretos, perda de dados, lucros cessantes ou interrupção
+de atividade decorrentes do uso ou da impossibilidade de uso do software.
+
+6. Licenças específicas
+
+Termos comerciais, empresariais, de redistribuição ou de código-fonte somente
+são válidos quando formalizados por escrito pelo titular.
+
+Esta licença não substitui aconselhamento jurídico profissional.

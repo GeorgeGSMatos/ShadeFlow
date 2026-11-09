@@ -1,0 +1,63 @@
+name: Draft release
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing tag, for example v1.2.3
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  supervisor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+          ref: ${{ inputs.tag }}
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Validate WSL source supervisor
+        run: python scripts/test-dev.py
+  draft:
+    needs: supervisor
+    runs-on: windows-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    defaults:
+      run:
+        shell: powershell
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+          ref: ${{ inputs.tag }}
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
+        with:
+          dotnet-version: 8.0.x
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Verify tag and project version
+        env:
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: |
+          $version = ([xml](Get-Content ShadeFlow.csproj -Raw)).Project.PropertyGroup.Version
+          if ($env:RELEASE_TAG -cne "v$version") { throw 'Tag/version mismatch.' }
+      - name: Validate
+        run: ./scripts/Validate.ps1
+      - name: Package
+        run: ./scripts/Build-Release.ps1
+      - name: Create draft with validated artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: |
+          $env:PATHEXT = '.COM;.EXE;.BAT;.CMD;' + $env:PATHEXT
+          $assets = @(Get-ChildItem "artifacts/release-$($env:RELEASE_TAG.Substring(1))" -File | Where-Object { $_.Name -match '\.zip$|^SHA256SUMS' } | Select-Object -ExpandProperty FullName)
+          gh release create $env:RELEASE_TAG @assets --draft --verify-tag --generate-notes
+          if ($LASTEXITCODE -ne 0) { throw 'Release draft creation failed.' }

@@ -1,0 +1,17 @@
+name: Sugerir melhoria
+description: Descreva um problema e a melhoria desejada.
+title: "[Sugestão]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Qual problema você quer resolver?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Como a melhoria ajudaria?
+    validations:
+      required: true

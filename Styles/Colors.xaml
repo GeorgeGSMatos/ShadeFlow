@@ -1,0 +1,49 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+    <FontFamily x:Key="ShadeFont">Segoe UI Variable, Segoe UI</FontFamily>
+    <CornerRadius x:Key="ShadeCorner">10</CornerRadius>
+    <Thickness x:Key="Space4">4</Thickness>
+    <Thickness x:Key="Space8">8</Thickness>
+    <Thickness x:Key="Space12">12</Thickness>
+    <Thickness x:Key="Space16">16</Thickness>
+
+    <FontFamily x:Key="IconFont">Segoe Fluent Icons, Segoe MDL2 Assets</FontFamily>
+    <sys:Double x:Key="FontBody">14</sys:Double><sys:Double x:Key="FontCaption">12</sys:Double>
+    <sys:Double x:Key="FontPageTitle">34</sys:Double><sys:Double x:Key="FontSection">18</sys:Double>
+    <sys:Double x:Key="IconSize">18</sys:Double><sys:Double x:Key="IconLargeSize">28</sys:Double>
+    <sys:Double x:Key="CompactControlHeight">32</sys:Double><sys:Double x:Key="ControlHeight">38</sys:Double>
+    <sys:Double x:Key="ChoiceHeight">40</sys:Double><sys:Double x:Key="DropdownMaxHeight">300</sys:Double>
+    <sys:Double x:Key="SettingChoiceWidth">180</sys:Double><GridLength x:Key="HotkeyColumnWidth">250</GridLength>
+    <sys:Double x:Key="IconButtonSize">32</sys:Double>
+    <Thickness x:Key="CardPadding">20</Thickness><Thickness x:Key="DialogPadding">24</Thickness>
+    <Thickness x:Key="SettingsRowMargin">20,16</Thickness><Thickness x:Key="SettingIconMargin">0,0,20,0</Thickness>
+    <Thickness x:Key="SettingDescriptionMargin">0,5,0,0</Thickness><Thickness x:Key="SettingActionMargin">16,0,0,0</Thickness>
+    <Thickness x:Key="InputPadding">10,5</Thickness><Thickness x:Key="ButtonPadding">14,8</Thickness>
+    <Thickness x:Key="ChoicePadding">11,5,34,5</Thickness><Thickness x:Key="DropdownPadding">5</Thickness>
+    <Thickness x:Key="DropdownItemPadding">12,8</Thickness><Thickness x:Key="DropdownItemMargin">0,1</Thickness>
+    <Color x:Key="DarkBackgroundColor">#202124</Color><Color x:Key="LightBackgroundColor">#F3F4F7</Color>
+    <Color x:Key="DarkSurfaceColor">#0CFFFFFF</Color><Color x:Key="LightSurfaceColor">#BFFFFFFF</Color>
+    <Color x:Key="DarkSolidSurfaceColor">#2B2D31</Color><Color x:Key="LightSolidSurfaceColor">#FFFFFF</Color>
+    <Color x:Key="DarkSurfaceHoverColor">#0FFFFFFF</Color><Color x:Key="LightSurfaceHoverColor">#0F000000</Color>
+    <Color x:Key="DarkTextColor">#F7F7F8</Color><Color x:Key="LightTextColor">#19212C</Color>
+    <Color x:Key="DarkMutedTextColor">#B8BAC3</Color><Color x:Key="LightMutedTextColor">#606570</Color>
+    <Color x:Key="DarkBorderColor">#20FFFFFF</Color><Color x:Key="LightBorderColor">#16000000</Color>
+    <Color x:Key="DarkTrackColor">#43FFFFFF</Color><Color x:Key="LightTrackColor">#40000000</Color>
+    <Color x:Key="DarkNavigationColor">#12000000</Color><Color x:Key="LightNavigationColor">#08FFFFFF</Color>
+    <Color x:Key="DarkQuickTintColor">#28202124</Color><Color x:Key="LightQuickTintColor">#25FFFFFF</Color>
+    <Color x:Key="DarkErrorColor">#F08080</Color><Color x:Key="LightErrorColor">#B3261E</Color>
+    <Color x:Key="DarkDangerColor">#F08080</Color><Color x:Key="LightDangerColor">#B3261E</Color>
+    <Color x:Key="DarkManualColor">#C4B5FD</Color><Color x:Key="LightManualColor">#7054A3</Color>
+    <Color x:Key="DarkSuccessColor">#70D59B</Color><Color x:Key="LightSuccessColor">#167044</Color>
+    <Color x:Key="DarkWarningColor">#EFC76D</Color><Color x:Key="LightWarningColor">#8F6200</Color>
+    <Color x:Key="DarkAccentColor">#78B9FF</Color><Color x:Key="LightAccentColor">#0067C0</Color>
+    <Color x:Key="DarkAccentTextColor">#10151D</Color><Color x:Key="LightAccentTextColor">#FFFFFF</Color>
+    <Color x:Key="DarkSelectionColor">#284B91C5</Color><Color x:Key="LightSelectionColor">#220067C0</Color>
+    <Color x:Key="DarkInteractionOutlineColor">#59FFFFFF</Color><Color x:Key="LightInteractionOutlineColor">#59000000</Color>
+    <Color x:Key="DarkMenuTintColor">#B3202124</Color><Color x:Key="LightMenuTintColor">#E6FFFFFF</Color>
+    <Color x:Key="DarkInteractionFillColor">#0FFFFFFF</Color><Color x:Key="LightInteractionFillColor">#0F000000</Color>
+    <Color x:Key="DarkDangerHoverColor">#20F08080</Color><Color x:Key="LightDangerHoverColor">#18B3261E</Color>
+    <Color x:Key="DarkAccentHoverColor">#24FFFFFF</Color><Color x:Key="LightAccentHoverColor">#24FFFFFF</Color>
+    <Color x:Key="DarkSelectionTextColor">#F7F7F8</Color><Color x:Key="LightSelectionTextColor">#19212C</Color>
+    <sys:Double x:Key="FontSubheading">16</sys:Double><sys:Double x:Key="FontStatus">11</sys:Double>
+</ResourceDictionary>
